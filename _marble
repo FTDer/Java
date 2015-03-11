@@ -1,0 +1,148 @@
+//Weiying Wang ; Mohan Ma
+import java.util.Scanner;
+import java.util.Random;
+public class Tester {
+	public static int playerChoice;
+	public static int comChoice;
+	public static int count=1;
+	public static int playerScore=0;
+	public static int comScore=0;
+	public static int winSymbol;
+	public static int again=1;
+
+	public static void main(String[] args) {
+		Random r=new Random();
+		Scanner in=new Scanner(System.in);
+		while(again==1){
+			playerScore=0;
+			count=1;
+			comScore=0;
+			while(true){
+				{printMenu();
+				playerChoice = getChoice();
+				comChoice = r.nextInt(5)+1;
+				whoWin();
+				if(winSymbol==1)
+					playerScore++;
+				else if (winSymbol==2)
+					comScore++;
+				else{
+				}
+				printResult();
+				}
+				if(playerScore>=6||comScore>=6||count>=11){
+					break;
+				}else{
+				}
+			}
+			if(comScore!=playerScore)
+			{
+				if(comScore==6){
+					System.out.println("*******************************************************");
+					System.out.println("Sorry, the computer won..Play again? (1 = yes, 2= no): ");
+					System.out.println("*******************************************************");
+				}
+				else if(playerScore == 6){
+					System.out.println("*******************************************************");
+					System.out.println("Comgradulation!You won..Play again? (1 = yes, 2= no): ");
+					System.out.println("*******************************************************");
+				}
+				else
+					if(playerScore>comScore){
+						System.out.println("****************************************************");
+						System.out.println("Comgradulation!You won..Play again? (1 = yes, 2= no): ");
+						System.out.println("****************************************************");
+					}
+					else{
+						System.out.println("******************************************************");
+						System.out.println("Sorry, the computer won..Play again? (1 = yes, 2= no): ");
+						System.out.println("******************************************************");
+					}
+			}
+			else {
+				System.out.println("********************************************");
+				System.out.println("Tie! ..Play again? (1 = yes, 2= no): ");
+				System.out.println("********************************************");
+			}
+			while(true) {
+				try {
+					again = Integer.parseInt(in.next());
+					if(again == 1 || again ==2) break;
+					else System.out.println("Invalid Entry...  Try again.");
+				} catch (NumberFormatException e) {
+					System.out.println("Invalid Entry...  Try again.");
+				}
+			}
+		}
+	}
+	public static void printMenu(){
+		System.out.println("Shoot! (1) Rock | (2) Paper | (3) Scissors | (4) Spock | (5) Lizard");
+		System.out.print("Please enter your number: ");
+	}
+	public static String getWeapon(int choice) {
+		if(choice == 1) return "Rock";
+		else if(choice == 2) return "Paper";
+		else if (choice == 3) return "Scissors";
+		else if (choice == 4) return "Spock";
+		else return "Lizard";
+	}
+
+	public static int getChoice(){
+		Scanner in=new Scanner(System.in);
+		int ret = 0;
+		while(true) {
+			try {
+				ret = Integer.parseInt(in.next());
+				if(ret >=1 && ret <=5) break;
+				else System.out.println("Invalid Entry...  Try again.");
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid Entry...  Try again.");
+			}
+		}
+		return ret;
+	}
+
+	public static void whoWin(){
+		if(playerChoice!=comChoice)
+		{
+			if(Math.abs(playerChoice-comChoice)==1)
+			{
+				if(playerChoice>comChoice){ winSymbol=1;}
+				else winSymbol=2;
+			}
+			if(Math.abs(playerChoice-comChoice)==2){
+				if(playerChoice<comChoice){
+					winSymbol = 1;}
+				else 
+				{winSymbol = 2;}
+			}
+			if(Math.abs(playerChoice-comChoice)==3){
+				if(playerChoice>comChoice){
+					winSymbol = 1;}
+				else
+				{winSymbol = 2;}
+			}
+			if(Math.abs(playerChoice-comChoice)==4){
+				if(playerChoice>comChoice){
+					winSymbol = 2;}
+				else
+				{winSymbol = 1;}
+			}
+		}
+		else 
+			winSymbol = 0;
+	}
+	
+	public static void printResult(){
+		if(winSymbol==0){
+			System.out.printf("[*****Tie*****]     Human: %d Computer: %d\n\n",playerScore,comScore);
+		}
+		else if(winSymbol==1){
+			System.out.printf("You won! %s beats %s   Human: %d Computer: %d\n\n",getWeapon(playerChoice),getWeapon(comChoice),playerScore,comScore);}
+		else {
+			System.out.printf("Computer won! %s beats %s    Human: %d Computer: %d\n\n",getWeapon(comChoice),getWeapon(playerChoice),playerScore,comScore);
+		}
+	}
+}
+
+
